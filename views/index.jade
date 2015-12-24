@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    #body
+      h1 用户登录
+      form(action="http://127.0.0.1:8000/", method="post")
+        p
+          | 用户名
+          input#username.input(type="text", name="username")
+        p
+          | 密码
+          input#password.input(type="text", name="password")
+        #button
+          p
+            input#submit(type="submit", value="登录")
+            input(type="reset")
+        p#regist
+          a(href="http://127.0.0.1:8000/regist") 注册

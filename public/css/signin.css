@@ -1,0 +1,28 @@
+#body {
+	border: 2px blue solid;
+	width: 350px;
+	padding: 10px;
+	margin: auto;
+}
+
+h1 {
+	text-align: center;
+}
+
+form {
+	margin: auto;
+	width: 250px;
+}
+
+.message, .input {
+	float: right;
+	display: inline;
+}
+
+#button {
+	text-align: center;
+}
+
+#regist {
+	text-align: center;
+}
