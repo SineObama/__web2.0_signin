@@ -6,21 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-var routes = require('./routes/index');
-var log = require('./log.js');
-// var userData = require('./userData.js');
-
-require('mongodb').MongoClient.connect('mongodb://localhost:27017/userData', function(err, db) {
-  var user = db.collection('user');
-  user.insertMany([{
-    'username': 'lala'
-  }]).then(function() {
-    user.find().toArray().then(function(len) {
-      log(len.length);
-    })
-  });
-})
-
+var routes = require('./routes/routes.js');
+var debug = require('debug')('signin:app');
+var fortest = 'abc';
+debug('test', fortest,'hehe', fortest);
 var app = express();
 
 // view engine setup

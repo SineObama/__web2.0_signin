@@ -1,27 +1,44 @@
-// var socket = io.connect('http://172.18.70.202:8000');
-// socket.emit('connection', {hello:'world'});
-// socket.on('news', function (data) {
-//     alert(data);
-// });
+var validator = new createValidator();
 
 $(function() {
-    $('#submit').click(function() {
-        if (!$('#username').val().match(/^[a-z][a-z0-9_]{5,17}$/i)) {
-            alert('用户名必须是6~18位英文字母、数字或下划线，必须以英文字母开头');
-            return false;
-        }
-        if (!$('#id').val().match(/^[1-9][0-9]{7}$/)) {
-            alert('学号必须是8位数字，不能以0开头');
-            return false;
-        }
-        if (!$('#phone').val().match(/^[1-9][0-9]{10}$/)) {
-            alert('电话必须是11位数字，不能以0开头');
-            return false;
-        }
-        if (!$('#mail').val().match(/^[a-zA-Z_\-]+@(([a-zA-Z_\-])+\.)+[a-zA-Z]{2,4}$/)) {
-            alert('邮箱不合法');
-            return false;
-        }
-        return true;
+
+  var namespace = ['username', 'password', 'id', 'phone', 'mail', 'passwordConfirm'];
+  var validation = {};
+  _.times(namespace.length, function(i) {
+    var name = namespace[i];
+    $('#' + name).on('blur', function() {
+      if ($(this).val() === '' && name !== namespace[namespace.length - 1]) {
+        validation[name].valid = false;
+        return;
+      }
+      validator[name + 'Checker']($(this).val(), (name === namespace[namespace.length - 1] ?
+          $('#password').val() : ''))
+        .then(function() {
+          validation[name].valid = true;
+          $('#' + name + 'Msg').text('');
+        }).catch(function(msg) {
+          validation[name].valid = false;
+          $('#' + name + 'Msg').text(msg);
+        });
     });
+    validation[name] = {
+      name: name,
+      valid: false
+    };
+  });
+
+  // todo this just fresh the data at the beginning, in case of '后退'
+  _.times(namespace.length, function(i) {
+    $('#' + namespace[i]).trigger('blur');
+  })
+
+  $('#submit').click(function() {
+    var submitable = true;
+    _.times(namespace.length, function(i) {
+      if (!validation[namespace[i]].valid)
+        return submitable = false;
+    });
+    return submitable;
+  });
+
 });

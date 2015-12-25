@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var log = require('../log');
-var userData = require('../userData.js');
+var debug = require('debug')('signin:routes');
+var userManager = require('../dataManager.js');
 
 router.get('/', function(req, res, next) {
   if (req.query.username) {
@@ -23,16 +23,26 @@ router.get('/index', function showPage(req, res, next) {
   req.session.user ? showDetailPage(req, res) : showIndexPage(req, res);
 });
 
-router.post('/index', function(req, res, next) {
+router.post('/signin', function(req, res, next) {
+  userManager.userSignin(req.body.username, req.body.password).then(function(user) {
+    delete req.session.user;
+    req.session.user = user;
+    redirect('/?username=' + user.username);
+  }).catch(function(msg) {
 
+  })
 });
 
 router.get('/regist', function(req, res, next) {
   res.render('regist.jade');
 });
 
-router.post('/regist', function(req, res, next) {
-
+router.post('/signup', function(req, res, next) {
+  userManager.addUser(req.body).then(function() {
+    res.redirect('/?username=' + req.body.username);
+  }).catch(function(msg) {
+    
+  });
 });
 
 module.exports = router;

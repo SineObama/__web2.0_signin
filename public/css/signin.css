@@ -14,7 +14,8 @@ form {
 	width: 250px;
 }
 
-.message, .input {
+.message,
+.input {
 	float: right;
 	display: inline;
 }
@@ -25,4 +26,9 @@ form {
 
 #regist {
 	text-align: center;
+}
+
+.msg {
+	font-size: 10pt;
+	color: red;
 }
