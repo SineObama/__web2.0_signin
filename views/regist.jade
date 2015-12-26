@@ -7,32 +7,33 @@ block content
       form(action="http://127.0.0.1:8000/signup", method="post")
         p
           | 用户名
-          input#username.input(type="text", name="username")
-        p#usernameMsg.msg
+          input#username.input(type="text", name="username", value="#{info.username}")
+        p.msg
         p
           | 密码
           input#password.input(type="password", name="password")
-        p#passwordMsg.msg
+        p.msg
         p
           | 确认密码
           input#passwordConfirm.input(type="password", name="passwordConfirm")
-        p#passwordConfirmMsg.msg
+        p.msg
         p
           | 学号
-          input#id.input(type="text", name="id")
-        p#idMsg.msg
+          input#id.input(type="text", name="id", value="#{info.id}")
+        p.msg
         p
           | 电话
-          input#phone.input(type="text", name="phone")
-        p#phoneMsg.msg
+          input#phone.input(type="text", name="phone", value="#{info.phone}")
+        p.msg
         p
           | 邮箱
-          input#mail.input(type="text", name="mail")
-        p#mailMsg.msg
+          input#mail.input(type="text", name="mail", value="#{info.mail}")
+        p.msg
         #button
           p
             input#submit(type="submit", value="注册")
-            input#reset(type="reset")
+            button#reset 重置
+          p#msg2.msg
       p#signin
         a(href="http://127.0.0.1:8000/index") 登录
     script(src="./js/userInformationForm.js")

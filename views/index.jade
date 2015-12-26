@@ -7,7 +7,7 @@ block content
     form(action="http://127.0.0.1:8000/signin", method="post")
       p
         | 用户名
-        input#username.input(type="text", name="username", value='#{usernameForSignin}')
+        input#username.input(type="text", name="username", value='#{info.usernameForSignin}')
       p
         | 密码
         input#password.input(type="password", name="password")

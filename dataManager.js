@@ -16,7 +16,7 @@ function dataManager() {
     db = newdb;
     collection = db.collection('user');
   }).then(showCurrentUsersNumber).then(function() {
-    debug('dataManager initialization finish.');
+    debug('initialization finish.');
   }).catch(fatalError);
 
   manager.addUser = function(user) {

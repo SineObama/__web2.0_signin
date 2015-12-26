@@ -45,19 +45,25 @@ router.get('/regist', function(req, res, next) {
   delete req.session.warning;
   res.render('regist.jade', {
     warning: warning,
-    info: req.session.info
+    info: req.session.info || {
+      username: '',
+      id: '',
+      phone: '',
+      mail: ''
+    }
   });
 });
 
 router.post('/signup', function(req, res, next) {
-  req.session.info = req.body;
-  debug('req.body.id', req.body.id);
   userManager.addUser(req.body).then(function(user) {
     debug('sign up successfully');
     req.session.user = user;
     res.redirect('/?username=' + req.body.username);
   }).catch(function(msg) {
     debug('sign up fail: ' + msg);
+    delete req.body.password;
+    delete req.body.passwordConfirm;
+    req.session.info = req.body;
     req.session.warning = msg;
     res.redirect(302, '/regist');
   });
@@ -85,6 +91,8 @@ function showIndexPage(req, res) {
   delete req.session.usernameForSignin;
   res.render('index.jade', {
     warning: warning,
-    usernameForSignin: username
+    info: {
+      usernameForSignin: username
+    }
   });
 }
