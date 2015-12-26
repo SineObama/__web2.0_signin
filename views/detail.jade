@@ -1,17 +1,20 @@
 extends layout
 
 block content
-    #body
-      h1 用户详情
-      p
-        | 用户名
-        input#username.message(type="text", name="username", disabled="disabled", value=#{username})
-      p
-        | 学号
-        input#id.message(type="text", name="id", disabled="disabled", value=#{id})
-      p
-        | 电话
-        input#phone.message(type="text", name="phone", disabled="disabled", value=#{phone})
-      p
-        | 邮箱
-        input#mail.message(type="text", name="mail", disabled="disabled", value=#{mail})
+  #body
+    h1 用户详情
+    p.msg #{warning}
+    p
+      | 用户名
+      input#username.message(type="text", name="username", disabled="disabled", value='#{user.username}')
+    p
+      | 学号
+      input#id.message(type="text", name="id", disabled="disabled", value='#{user.id}')
+    p
+      | 电话
+      input#phone.message(type="text", name="phone", disabled="disabled", value='#{user.phone}')
+    p
+      | 邮箱
+      input#mail.message(type="text", name="mail", disabled="disabled", value='#{user.mail}')
+    p#exit
+      a(href="http://127.0.0.1:8000/signout") 退出登录

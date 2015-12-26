@@ -31,4 +31,9 @@ form {
 .msg {
 	font-size: 10pt;
 	color: red;
+	text-align: center;
+}
+
+#exit {
+	text-align: right;
 }

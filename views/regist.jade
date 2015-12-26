@@ -3,6 +3,7 @@ extends layout
 block content
     #body
       h1 用户注册
+      p#msg.msg #{warning}
       form(action="http://127.0.0.1:8000/signup", method="post")
         p
           | 用户名
@@ -10,11 +11,11 @@ block content
         p#usernameMsg.msg
         p
           | 密码
-          input#password.input(type="text", name="password")
+          input#password.input(type="password", name="password")
         p#passwordMsg.msg
         p
           | 确认密码
-          input#passwordConfirm.input(type="text", name="passwordConfirm")
+          input#passwordConfirm.input(type="password", name="passwordConfirm")
         p#passwordConfirmMsg.msg
         p
           | 学号
@@ -32,6 +33,5 @@ block content
           p
             input#submit(type="submit", value="注册")
             input(type="reset")
-        p#msg.msg
     script(src="./js/validator.js")
     script(src="./js/regist.js")

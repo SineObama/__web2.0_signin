@@ -8,8 +8,7 @@ var session = require('express-session');
 
 var routes = require('./routes/routes.js');
 var debug = require('debug')('signin:app');
-var fortest = 'abc';
-debug('test', fortest,'hehe', fortest);
+
 var app = express();
 
 // view engine setup
