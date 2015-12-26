@@ -2,43 +2,69 @@ var validator = new createValidator();
 
 $(function() {
 
-  var namespace = ['username', 'password', 'id', 'phone', 'mail', 'passwordConfirm'];
   var validation = {};
-  _.times(namespace.length, function(i) {
-    var name = namespace[i];
+  const nameArray = informationForm.nameArray.slice(0);
+  nameArray.push('passwordConfirm');
+  var data = {};
+
+  _.times(nameArray.length, function(i) {
+    const name = nameArray[i];
+    validation[name] = false;
+    data[name] = $('#' + name).val();
     $('#' + name).on('blur', function() {
-      if ($(this).val() === '' && name !== namespace[namespace.length - 1]) {
-        validation[name].valid = false;
+      const that = this;
+      data[name] = $(that).val();
+      if ($(that).val() === '' && name !== 'passwordConfirm') {
+        validation[name] = false;
         return;
       }
-      validator[name + 'Checker']($(this).val(), (name === namespace[namespace.length - 1] ?
-          $('#password').val() : ''))
-        .then(function() {
-          validation[name].valid = true;
-          $('#' + name + 'Msg').text('');
-        }).catch(function(msg) {
-          validation[name].valid = false;
-          $('#' + name + 'Msg').text(msg);
-        });
+      check(name);
     });
-    validation[name] = {
-      name: name,
-      valid: false
-    };
   });
 
-  // todo this just fresh the data at the beginning, in case of '后退'
-  _.times(namespace.length, function(i) {
-    $('#' + namespace[i]).trigger('blur');
+  $('#password').on('blur', function() {
+    const that = this;
+    if ($('#passwordConfirm').val())
+      check('passwordConfirm');
+  });
+
+  // this just fresh the data at the beginning, in case of '后退'
+  _.times(nameArray.length, function(i) {
+    $('#' + nameArray[i]).trigger('blur');
   })
 
-  $('#submit').click(function() {
+  $('#submit').on('click', function() {
+    // validator.information(data).then(function() {
+    //   $.post('http://127.0.0.1:8000/signup', data);
+    // }).catch(function(err) {
+
+    // });
+
+    // _.times(nameArray.length, function(i) {
+    //   const name = nameArray[i];
+    // });
     var submitable = true;
-    _.times(namespace.length, function(i) {
-      if (!validation[namespace[i]].valid)
+    _.times(nameArray.length, function(i) {
+      if (!validation[nameArray[i]])
         return submitable = false;
     });
     return submitable;
   });
+
+  $('#reset').on('click', function() {
+    _.times(nameArray.length, function(i) {
+      validation[nameArray[i]] = false;
+    });
+  });
+
+  function check(name) {
+    return validator[name](data).then(function() {
+      validation[name] = true;
+      $('#' + name).parent().next().text('');
+    }).catch(function(msg) {
+      validation[name] = false;
+      $('#' + name).parent().next().text(msg);
+    });
+  }
 
 });

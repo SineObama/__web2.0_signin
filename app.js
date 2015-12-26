@@ -10,6 +10,7 @@ var routes = require('./routes/routes.js');
 var debug = require('debug')('signin:app');
 
 var app = express();
+module.exports = app;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,9 +25,6 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  // genid: function(req) {
-  //   return genuuid();
-  // },
   resave: false,
   saveUninitialized: true,
   secret: 'keyboard cat'
@@ -60,8 +58,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-module.exports = app;
 
 function notFound(req, res, next) {
   var err = new Error('Not Found');
