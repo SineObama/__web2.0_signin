@@ -31,9 +31,9 @@ $(function() {
 
   $('#password').on('blur', function() {
     const that = this;
-      validator['password'](data).then(function() {
-        check('passwordConfirm');
-      }).catch(function() {});
+    validator['password'](data).then(function() {
+      check('passwordConfirm');
+    }).catch(function() {});
   });
 
   // this just fresh the data at the beginning, in case of '后退'
@@ -58,8 +58,8 @@ $(function() {
   });
 
   $('#reset').on('click', function() {
+    $('.input').val('');
     _.times(nameArray.length, function(i) {
-      $('#' + nameArray[i]).val('');
       validation[nameArray[i]] = false;
     });
     return false;
