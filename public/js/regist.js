@@ -20,11 +20,6 @@ $(function() {
           return;
         }
         check(name).catch(function() {});
-      } else {
-        if ($('#password').val())
-          validator['password'](data).then(function() {
-            check('passwordConfirm');
-          }).catch(function() {});
       }
     });
   });
@@ -32,8 +27,17 @@ $(function() {
   $('#password').on('blur', function() {
     const that = this;
     validator['password'](data).then(function() {
-      check('passwordConfirm');
+      if ($('#passwordConfirm').val())
+        check('passwordConfirm');
     }).catch(function() {});
+  });
+
+  $('#passwordConfirm').on('blur', function() {
+    const that = this;
+    if ($('#password').val())
+      validator['password'](data).then(function() {
+        check('passwordConfirm');
+      }).catch(function() {});
   });
 
   // this just fresh the data at the beginning, in case of '后退'
